@@ -50,6 +50,8 @@ export const BookingForm = () => {
     setIsSubmitting(true);
     
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
       const { error } = await supabase.from("bookings").insert({
         customer_name: data.customer_name,
         customer_email: data.customer_email,
@@ -59,6 +61,7 @@ export const BookingForm = () => {
         delivery_address: data.delivery_address,
         total_price: selectedPrice,
         status: "pending",
+        user_id: user?.id || null,
       });
 
       if (error) throw error;
@@ -69,7 +72,6 @@ export const BookingForm = () => {
       
       form.reset();
     } catch (error) {
-      console.error("Booking error:", error);
       toast.error("Booking failed", {
         description: "Please try again or contact us directly.",
       });

@@ -27,6 +27,7 @@ export type Database = {
           murti_type: string
           status: string
           total_price: number
+          user_id: string | null
         }
         Insert: {
           booking_date?: string
@@ -40,6 +41,7 @@ export type Database = {
           murti_type: string
           status?: string
           total_price: number
+          user_id?: string | null
         }
         Update: {
           booking_date?: string
@@ -53,6 +55,42 @@ export type Database = {
           murti_type?: string
           status?: string
           total_price?: number
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
